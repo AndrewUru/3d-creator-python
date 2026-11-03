@@ -1,0 +1,14 @@
+# Instalar torch y torchvision CPU por separado; ver scripts/install_local_ai.py.
+numpy==1.26.4
+pillow==10.4.0
+omegaconf==2.3.0
+einops==0.7.0
+transformers==4.35.2
+huggingface-hub==0.25.2
+trimesh==4.5.3
+scikit-image==0.24.0
+imageio==2.36.1
+rembg==2.0.60
+onnxruntime==1.20.1
+networkx==3.4.2
+psutil==6.1.0

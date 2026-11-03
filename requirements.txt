@@ -1,0 +1,11 @@
+gradio==6.31.0
+opencv-python-headless==5.0.0.93
+pillow==12.3.0
+numpy==2.5.4
+trimesh==5.2.0
+shapely==2.2.0
+mapbox-earcut==2.1.0
+manifold3d==3.5.4
+networkx==3.7
+httpx==0.28.1
+python-dotenv==1.2.4
