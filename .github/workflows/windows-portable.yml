@@ -1,0 +1,45 @@
+name: Windows portable EXE
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "desktop.py"
+      - "app.py"
+      - "imagen3d/**"
+      - "requirements*.txt"
+      - "scripts/build_windows.ps1"
+      - ".github/workflows/windows-portable.yml"
+
+jobs:
+  windows-build:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          architecture: x64
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-desktop.txt
+      - name: Create Python environment
+        shell: pwsh
+        run: py -3.12 -m venv .venv
+      - name: Build portable app
+        shell: pwsh
+        run: ./scripts/build_windows.ps1
+      - name: Archive portable folder
+        shell: pwsh
+        run: Compress-Archive -Path "dist/3D-Creator" -DestinationPath "3D-Creator-Windows-x64.zip"
+      - name: Upload executable bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: 3D-Creator-Windows-x64
+          path: 3D-Creator-Windows-x64.zip
+          if-no-files-found: error
+          retention-days: 14
