@@ -2,6 +2,8 @@
 
 Aplicación Python local con Gradio: convierte siluetas y fotografías en sólidos mediante CPU. La interfaz no usa Meshy, claves API, suscripciones ni tokens. El modo de fotografías utiliza un modelo gratuito descargado una vez; después funciona sin conexión.
 
+**Ejecutable Windows:** hay una primera distribución portable en desarrollo (ventana de escritorio, sin instalar Python). Consulta [cómo compilar y descargar 3D Creator Studio](docs/WINDOWS.md). La versión portable inicial incluye las funciones sin IA; los modelos IA se distribuirán en una fase posterior.
+
 ## Inicio en Windows (PowerShell)
 
 Requiere Python 3.12 de 64 bits. Desde la carpeta del proyecto:

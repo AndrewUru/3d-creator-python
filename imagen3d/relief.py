@@ -2,6 +2,7 @@
 from pathlib import Path
 import os
 import subprocess
+import sys
 
 import cv2
 import numpy as np
@@ -19,6 +20,8 @@ def depth_available():
 
 def estimate_depth(image, folder):
     if not depth_available():
+        if getattr(sys, "frozen", False):
+            raise ValueError("La versión portable aún no incluye Depth Anything. Utiliza la instalación Python para el modo fotografía IA.")
         raise ValueError("Instala el modelo gratuito: .venv/Scripts/python scripts/install_depth.py")
     source, target = Path(folder) / "entrada.png", Path(folder) / "profundidad.npy"
     # Bound inference output and strip metadata before the local worker.

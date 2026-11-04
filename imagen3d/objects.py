@@ -4,6 +4,7 @@ import os
 import subprocess
 import json
 import time
+import sys
 from .geometry import read_image
 from .storage import new_folder
 
@@ -17,6 +18,8 @@ def generate_object(path, size, resolution):
             raise ValueError('Tamaño entre 1 y 1000 mm y resolución 96, 128 o 192.')
         image = read_image(path)
         if not PYTHON.exists() or not (ROOT / 'models/TripoSR/installed.ok').exists():
+            if getattr(sys, 'frozen', False):
+                raise ValueError('La versión portable aún no incluye el motor TripoSR. Utiliza la instalación Python para reconstruir objetos completos.')
             raise ValueError('Instala la IA gratuita con: .venv/Scripts/python scripts/install_local_ai.py')
         folder = new_folder()
         image.thumbnail((1024, 1024))
