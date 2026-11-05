@@ -154,9 +154,13 @@ def create_app():
                             with gr.Column(elem_classes="files"):
                                 object_stl = gr.File(label="STL · milímetros, sin colores", interactive=False)
                                 object_glb = gr.File(label="GLB · metros, con colores", interactive=False)
+                # Un generador reenvía su último valor al terminar. Si Model3D lo recibe
+                # dos veces mientras carga su visor, cancela la carga y se queda vacío.
+                object_model = gr.State()
                 object_run.click(generate_object, [object_source, object_size, object_resolution],
-                                 [object_cutout, object_viewer, object_stl, object_glb, object_status],
-                                 concurrency_limit=1, concurrency_id="local_ai", trigger_mode="once")
+                                 [object_cutout, object_model, object_stl, object_glb, object_status],
+                                 concurrency_limit=1, concurrency_id="local_ai", trigger_mode="once"
+                                 ).then(lambda model: model, object_model, object_viewer, show_progress="hidden")
             with gr.Tab("Dar volumen"):
                 with gr.Row(elem_classes="workspace"):
                     with gr.Column(elem_classes="controls"):
