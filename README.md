@@ -1,4 +1,5 @@
 # Imagen a 3D
+<img width="1254" height="1254" alt="image" src="https://github.com/user-attachments/assets/23495cc4-b1ec-40b2-a919-113daec0da21" />
 
 Aplicación Python local con Gradio: convierte siluetas y fotografías en sólidos mediante CPU. La interfaz no usa Meshy, claves API, suscripciones ni tokens. El modo de fotografías utiliza un modelo gratuito descargado una vez; después funciona sin conexión.
 
