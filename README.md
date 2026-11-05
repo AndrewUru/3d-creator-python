@@ -15,6 +15,16 @@ Copy-Item .env.example .env
 
 Abre http://127.0.0.1:7860. No es necesario activar el entorno ni cambiar la política de ejecución. Si el entorno ya está instalado, basta con el último comando. Detén el servidor con Ctrl+C.
 
+## Ventana de escritorio
+
+Para usar la aplicación en su propia ventana, sin abrir el navegador:
+
+```powershell
+.\.venv\Scripts\python desktop.py
+```
+
+Usa un puerto libre automáticamente y, al cerrar la ventana, detiene el servidor. En Windows necesita el runtime WebView2, incluido en Windows 11. En Linux, `pywebview` requiere además GTK o Qt.
+
 ## Inicio en Linux
 
 ```bash
