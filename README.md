@@ -51,7 +51,7 @@ No reconstruye detalles internos, colores o profundidad de una fotografía. Una 
 
 ## Objeto completo sin placa
 
-Para frutas, figuras y productos con volumen por todos los lados, utiliza la primera pestaña **Objeto completo · sin placa**. El modo Relieve produce una placa con alturas y no sirve como sustituto de la reconstrucción completa.
+Para frutas, figuras y productos con volumen por todos los lados, utiliza la primera pestaña **Objeto completo**. El modo Relieve produce una placa con alturas y no sirve como sustituto de la reconstrucción completa.
 
 Instalación gratuita, una sola vez:
 
@@ -73,7 +73,7 @@ La parte trasera es estimada: una sola imagen no determina su geometría real. N
 .\.venv\Scripts\python scripts/install_depth.py
 ```
 
-2. Inicia la aplicación y abre **Relieve local gratuito**.
+2. Inicia la aplicación y abre **Relieve**.
 3. Sube una fotografía y selecciona **Fotografía · IA local**.
 4. Ajusta anchura, altura del relieve, base, suavizado, inversión y curva de alturas.
 5. Genera, revisa el mapa de alturas y gira la malla. Descarga STL, GLB y el mapa PNG.

@@ -69,7 +69,7 @@ THEME = gr.themes.Base(
     primary_hue="orange", neutral_hue="stone", radius_size=gr.themes.sizes.radius_sm,
     font=["Segoe UI Variable Text", "Segoe UI", "system-ui", "sans-serif"],
     font_mono=["Cascadia Mono", "Consolas", "monospace"],
-).set(**COLORS, **{key + "_dark": value for key, value in COLORS.items()})
+).set(**COLORS, **{key + "_dark": value for key, value in COLORS.items() if key != "color_accent"})
 FORCE_DARK = "() => document.body.classList.add('dark')"
 VIEWPORT_COLOR = (0.125, 0.118, 0.11, 1)
 
@@ -77,38 +77,45 @@ CSS = """
 .gradio-container {max-width: none !important; padding: 0 !important; margin: 0 !important;}
 .gradio-container main, .gradio-container .main {max-width: none !important; padding: 0 16px !important; margin: 0 !important;}
 footer {display: none !important;}
-#brand {position: absolute; top: 12px; left: 16px; z-index: 5; margin: 0; padding: 0; pointer-events: none;}
+#brand {position: absolute; top: 12px; left: 0; z-index: 5; margin: 0; padding: 0; pointer-events: none;}
 #brand p {margin: 0; font-size: 17px; font-weight: 650; letter-spacing: -.01em; color: #edeae5;}
-#retention {position: absolute; top: 15px; right: 16px; z-index: 5; margin: 0; padding: 0; width: auto; pointer-events: none;}
+#retention {position: absolute; top: 15px; right: 0; z-index: 5; margin: 0; padding: 0; width: auto; pointer-events: none;}
 #retention p {margin: 0; font-size: 12.5px; color: #a8a299;}
 #modes > div:first-child {padding-left: 124px; min-height: 48px;}
 #modes button[role="tab"] {font-size: 14px; height: 48px;}
 #modes button[role="tab"][aria-selected="true"] {color: #edeae5; font-weight: 600;}
 #modes > .tabitem, #modes [role="tabpanel"] {padding: 12px 0 0; border: 0; background: none;}
 .workspace {gap: 16px; flex-wrap: nowrap; align-items: stretch;}
-.controls {flex: 0 0 340px !important; width: 340px; min-width: 0 !important; height: calc(100vh - 76px); overflow-y: auto; gap: 12px;
-           display: flex; flex-direction: column; padding-right: 4px; scrollbar-width: thin; scrollbar-color: #3a3733 transparent;}
-.controls .lead {font-size: 13px; line-height: 1.45; color: #a8a299;}
-.controls .lead p {margin: 0;}
-.controls .note {font-size: 12.5px; line-height: 1.45; color: #a8a299;}
-.controls .note p {margin: 0;}
+.controls {flex: 0 0 340px !important; width: 340px; min-width: 0 !important; height: calc(100vh - 92px); overflow: hidden auto; gap: 12px;
+           display: flex; flex-direction: column; flex-wrap: nowrap !important; padding-right: 4px; --neutral-200: #3a3733; scrollbar-width: thin; scrollbar-color: #3a3733 transparent;}
+.controls > * {flex: none;}
+.controls .lead p {margin: 0; font-size: 13px !important; line-height: 1.45; color: #c9c4bb !important;}
+.controls .note p {margin: 0; font-size: 12.5px !important; line-height: 1.45; color: #a8a299 !important;}
 .controls .section p {margin: 6px 0 0; font-size: 13px; font-weight: 600; color: #edeae5;}
 .run {position: sticky; bottom: 0; z-index: 3; margin-top: auto; box-shadow: 0 -12px 12px #161514; min-height: 44px; flex-shrink: 0;}
-.stage {flex: 1 1 0 !important; min-width: 0 !important; height: calc(100vh - 76px); gap: 12px; display: flex; flex-direction: column; flex-wrap: nowrap;}
+.stage {flex: 1 1 0 !important; min-width: 0 !important; height: calc(100vh - 92px); gap: 12px; display: flex; flex-direction: column; flex-wrap: nowrap;}
 .viewport {flex: 1 1 0; min-height: 240px; height: auto !important;}
 .viewport > div, .viewport .model3D, .viewport canvas {height: 100% !important;}
 .tray {flex: 0 0 168px; gap: 12px; flex-wrap: nowrap; align-items: stretch; min-height: 0;}
 .tray .thumb {flex: 0 0 168px !important; min-width: 0 !important; height: 168px;}
-.tray .readout {flex: 1 1 0 !important; min-width: 200px !important; height: 168px; overflow-y: auto; font-size: 13px; line-height: 1.5;
-                padding: 10px 12px; border: 1px solid #3a3733; border-radius: 8px; background: #1f1d1b; scrollbar-width: thin;}
-.tray .readout p {margin: 0 0 6px;}
-.tray .files {flex: 0 0 236px !important; min-width: 0 !important; height: 168px; gap: 8px; flex-wrap: nowrap;}
-.tray .files .block {flex: 1 1 0; min-height: 0; overflow: hidden;}
+.tray .readout {flex: 1 1 0 !important; min-width: 200px !important; height: 168px; overflow: hidden auto; flex-wrap: nowrap !important; gap: 0;
+                padding: 10px 12px; border: 1px solid #3a3733; border-radius: 8px; background: #1f1d1b; scrollbar-width: thin; scrollbar-color: #3a3733 transparent;}
+.tray .readout > * {flex: none; padding: 0; border: 0; background: none;}
+.tray .readout p, .tray .readout li {margin: 0 0 6px; font-size: 13px !important; line-height: 1.5;}
+.tray .files {flex: 0 0 260px !important; min-width: 0 !important; height: 168px; gap: 8px; flex-wrap: nowrap !important;}
+.tray .files .block {flex: 1 1 0; min-height: 0; overflow: hidden; padding: 0 !important;}
+.tray .files label[data-testid="block-label"] {position: absolute; top: 0; left: 0;}
+.tray .files .block > :not(label):not([data-testid="status-tracker"]) {margin-top: 26px !important;}
+.tray .files .empty {display: none;}
+.tray .files .file-preview-holder, .tray .files .file-preview {margin: 0 !important; max-height: none; overflow: hidden;}
+.tray .files table.file-preview, .tray .files tr.file {padding: 0 !important; margin: 0 !important;}
+.tray .files td {padding: 2px 8px !important; margin: 0 !important; font-size: 12.5px;}
 @media (max-width: 1080px) {
   #retention {display: none;}
   .tray {flex-basis: auto; flex-wrap: wrap;}
   .tray .files {flex: 1 1 100% !important; height: auto; flex-direction: row;}
-  .tray .files .block {min-height: 76px;}
+  .tray .files .block {min-height: 56px;}
+  .tray .thumb {flex: 1 1 0 !important;}
   .stage {height: auto;}
   .viewport {flex: 0 0 auto; height: 52vh !important;}
 }
@@ -133,7 +140,7 @@ def create_app():
                 with gr.Row(elem_classes="workspace"):
                     with gr.Column(elem_classes="controls"):
                         gr.Markdown("Reconstruye un objeto con volumen por todos los lados, sin placa. Las zonas ocultas se estiman. Para placas usa Relieve.", elem_classes="lead")
-                        object_source = gr.File(label="Foto de un único objeto · PNG/JPG", type="filepath", file_types=[".png", ".jpg", ".jpeg"], height=132)
+                        object_source = gr.File(label="Foto de un único objeto · PNG/JPG", type="filepath", file_types=[".png", ".jpg", ".jpeg"], height=156)
                         object_size = gr.Number(value=100, minimum=1, maximum=1000, label="Dimensión mayor del objeto (mm)")
                         object_resolution = gr.Dropdown([96, 128, 192], value=128, label="Resolución 3D", info="96 para una prueba rápida, 128 normal, 192 más detalle y tiempo.")
                         gr.Markdown("TripoSR en CPU: puede tardar varios minutos. El fondo se elimina automáticamente; usa un PNG transparente si el recorte falla. La escala es la que indiques, no una medida extraída de la foto.", elem_classes="note")
@@ -141,8 +148,9 @@ def create_app():
                     with gr.Column(elem_classes="stage"):
                         object_viewer = gr.Model3D(label="Objeto completo · gira para ver la parte trasera", interactive=False, clear_color=VIEWPORT_COLOR, elem_classes="viewport")
                         with gr.Row(elem_classes="tray"):
-                            object_cutout = gr.Image(label="Sin fondo", interactive=False, elem_classes="thumb")
-                            object_status = gr.Markdown("Sube una foto para reconstruirla sin placa.", elem_classes="readout")
+                            object_cutout = gr.Image(label="Sin fondo", interactive=False, buttons=["fullscreen"], elem_classes="thumb")
+                            with gr.Column(elem_classes="readout"):
+                                object_status = gr.Markdown("Sube una foto para reconstruirla sin placa.")
                             with gr.Column(elem_classes="files"):
                                 object_stl = gr.File(label="STL · milímetros, sin colores", interactive=False)
                                 object_glb = gr.File(label="GLB · metros, con colores", interactive=False)
@@ -153,7 +161,7 @@ def create_app():
                 with gr.Row(elem_classes="workspace"):
                     with gr.Column(elem_classes="controls"):
                         gr.Markdown("Da grosor a dibujos, letras y siluetas. No reproduce los detalles interiores del dibujo.", elem_classes="lead")
-                        source = gr.File(label="PNG o JPG · máximo 15 MB", file_types=[".png", ".jpg", ".jpeg"], type="filepath", height=132)
+                        source = gr.File(label="PNG o JPG · máximo 15 MB", file_types=[".png", ".jpg", ".jpeg"], type="filepath", height=156)
                         gr.Markdown("Silueta", elem_classes="section")
                         mode = gr.Dropdown(["Automática", "Transparencia", "Luminancia"], value="Automática", label="Origen de la máscara")
                         threshold = gr.Slider(0, 255, value=127, step=1, label="Umbral de detección", info="Transparencia: conserva alfa mayor que el umbral. Luminancia: conserva los tonos más oscuros.")
@@ -174,8 +182,8 @@ def create_app():
                     with gr.Column(elem_classes="stage"):
                         viewer = gr.Model3D(label="Tu modelo · arrastra para girar, usa la rueda para acercar", interactive=False, clear_color=VIEWPORT_COLOR, elem_classes="viewport")
                         with gr.Row(elem_classes="tray"):
-                            original = gr.Image(label="Original", interactive=False, elem_classes="thumb")
-                            mask = gr.Image(label="Máscara", interactive=False, image_mode="L", elem_classes="thumb")
+                            original = gr.Image(label="Original", interactive=False, buttons=["fullscreen"], elem_classes="thumb")
+                            mask = gr.Image(label="Máscara", interactive=False, buttons=["fullscreen"], image_mode="L", elem_classes="thumb")
                             with gr.Column(elem_classes="readout"):
                                 mask_status = gr.Markdown("Sube una imagen para ver la máscara.")
                                 result = gr.Markdown("El modelo aparecerá aquí después de generar.")
@@ -192,7 +200,7 @@ def create_app():
                 with gr.Row(elem_classes="workspace"):
                     with gr.Column(elem_classes="controls"):
                         gr.Markdown("Crea un bajorrelieve con detalles interiores y base rectangular cerrada. La IA estima profundidad; no reconstruye la parte trasera.", elem_classes="lead")
-                        photo = gr.File(label="Fotografía o mapa de alturas · PNG/JPG", type="filepath", file_types=[".png", ".jpg", ".jpeg"], height=132)
+                        photo = gr.File(label="Fotografía o mapa de alturas · PNG/JPG", type="filepath", file_types=[".png", ".jpg", ".jpeg"], height=156)
                         relief_mode = gr.Dropdown(["Fotografía · IA local", "Mapa de alturas · blanco elevado"], value="Fotografía · IA local", label="Interpretación de la imagen")
                         gr.Markdown("El modo mapa interpreta el brillo como altura y funciona sin modelos. La transparencia deja visible la base; para quitar el fondo usa un PNG recortado.", elem_classes="note")
                         rw = gr.Number(value=100, label="Anchura (mm)")
@@ -208,8 +216,9 @@ def create_app():
                     with gr.Column(elem_classes="stage"):
                         relief_viewer = gr.Model3D(label="Relieve cerrado", interactive=False, clear_color=VIEWPORT_COLOR, elem_classes="viewport")
                         with gr.Row(elem_classes="tray"):
-                            height_preview = gr.Image(label="Mapa de alturas", interactive=False, image_mode="L", elem_classes="thumb")
-                            relief_status = gr.Markdown("Sube una imagen y genera el relieve. Ajusta los controles y vuelve a generar para corregirlo.", elem_classes="readout")
+                            height_preview = gr.Image(label="Mapa de alturas", interactive=False, buttons=["fullscreen"], image_mode="L", elem_classes="thumb")
+                            with gr.Column(elem_classes="readout"):
+                                relief_status = gr.Markdown("Sube una imagen y genera el relieve. Ajusta los controles y vuelve a generar para corregirlo.")
                             with gr.Column(elem_classes="files"):
                                 relief_stl = gr.File(label="STL · milímetros", interactive=False)
                                 relief_glb = gr.File(label="GLB · metros", interactive=False)
